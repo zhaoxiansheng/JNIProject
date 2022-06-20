@@ -3,46 +3,29 @@
 
 # Sets the minimum version of CMake required to build the native library.
 
+#cmake版本 cmake中不区分大小写
 cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
 
 project("jniproject")
 
-# Creates and names a library, sets it as either STATIC
-# or SHARED, and provides the relative paths to its source code.
-# You can define multiple libraries, and CMake builds them for you.
-# Gradle automatically packages shared libraries with your APK.
-
-add_library( # Sets the name of the library.
+#创建一个库 可以多次调用创建多个库
+add_library( # 设置库的名称.
              jniproject
-
-             # Sets the library as a shared library.
+             # 设置库的类型 SHARED or STATIC
              SHARED
-
-             # Provides a relative path to your source file(s).
+             # 设置源文件
              native-lib.cpp )
 
-# Searches for a specified prebuilt library and stores the path as a
-# variable. Because CMake includes system libraries in the search path by
-# default, you only need to specify the name of the public NDK library
-# you want to add. CMake verifies that the library exists before
-# completing its build.
-
-find_library( # Sets the name of the path variable.
+#搜索指定的预构建库（CMake默认包含系统库）
+find_library( # 设置路径变量的名称.
               log-lib
-
-              # Specifies the name of the NDK library that
-              # you want CMake to locate.
+              # 指定要CMake查找的NDK库的名称.
               log )
 
-# Specifies libraries CMake should link to your target library. You
-# can link multiple libraries, such as libraries you define in this
-# build script, prebuilt third-party libraries, or system libraries.
-
-target_link_libraries( # Specifies the target library.
+#指定目标链接库
+target_link_libraries( # 指定目标库.
                        jniproject
-
-                       # Links the target library to the log library
-                       # included in the NDK.
+                       # 将目标库链接到日志库包含在NDK中
                        ${log-lib} )
