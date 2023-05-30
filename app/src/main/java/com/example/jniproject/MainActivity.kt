@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jniproject.databinding.ActivityMainBinding
 
+const val staticName= "Static Cat"
 class MainActivity : AppCompatActivity() {
+
+    private val name = "Cat"
 
     private lateinit var binding: ActivityMainBinding
 
@@ -14,18 +17,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Example of a call to a native method
         binding.sampleText.text = stringFromJNI()
+        visitField()
     }
 
-    /**
-     * A native method that is implemented by the 'jniproject' native library,
-     * which is packaged with this application.
-     */
     external fun stringFromJNI(): String
+    external fun visitField()
 
     companion object {
-        // Used to load the 'jniproject' library on application startup.
         init {
             System.loadLibrary("jniproject")
         }

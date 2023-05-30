@@ -4,10 +4,11 @@ plugins {
 }
 
 android {
+    namespace 'com.zhaoyu.anr'
     compileSdk 32
 
     defaultConfig {
-        minSdk 21
+        minSdk 31
         targetSdk 32
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
