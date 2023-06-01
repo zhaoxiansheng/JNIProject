@@ -2,12 +2,11 @@ package com.example.jniproject
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.android.car.zcrash_lib.NativeLib
 import com.example.jniproject.databinding.ActivityMainBinding
 
 const val staticName= "Static Cat"
 class MainActivity : AppCompatActivity() {
-
-    private val name = "Cat"
 
     private lateinit var binding: ActivityMainBinding
 
@@ -17,16 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.sampleText.text = stringFromJNI()
-        visitField()
-    }
-
-    external fun stringFromJNI(): String
-    external fun visitField()
-
-    companion object {
-        init {
-            System.loadLibrary("jniproject")
-        }
+        val nativeLib = NativeLib();
+        binding.sampleText.text = nativeLib.stringFromJNI()
+        nativeLib.visitField()
     }
 }

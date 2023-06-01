@@ -15,11 +15,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-//                cppFlags '-std=c++14'
-                cppFlags ''
-            }
+        ndk {
+            abiFilters rootProject.ext.abiFilters.split(",")
         }
     }
 
@@ -36,12 +33,6 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.22.1'
-        }
-    }
     buildFeatures {
         viewBinding true
     }
@@ -56,4 +47,6 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation project(':zcrash_lib')
 }

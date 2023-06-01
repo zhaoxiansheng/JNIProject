@@ -3,15 +3,15 @@
 #include "mylog.h"
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_jniproject_MainActivity_stringFromJNI(
-        JNIEnv *env,
+Java_com_android_car_zcrash_1lib_NativeLib_stringFromJNI(
+        JNIEnv* env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_jniproject_MainActivity_visitField(JNIEnv *env, jobject thiz) {
+Java_com_android_car_zcrash_1lib_NativeLib_visitField(JNIEnv *env, jobject thiz) {
     jclass j_cls = env->GetObjectClass(thiz);
     jfieldID j_fieldId = env->GetFieldID(j_cls, "name", "Ljava/lang/String;");
     jstring j_str = static_cast<jstring>(env->GetObjectField(thiz, j_fieldId));
