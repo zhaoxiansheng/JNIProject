@@ -6,26 +6,15 @@
 #define JNIPROJECT_MYLOG_H
 
 #include <iostream>
+#include <android/log.h>
 
-#define LOG_LEVEL_ERROR             (1)
-#define LOG_LEVEL_WARNING           (2)
-#define LOG_LEVEL_INFO              (3)
-#define LOG_LEVEL_DEBUG             (4)
-
-#define LOG_ERROR(...)          Logout(LOG_LEVEL_ERROR, __VA_ARGS__);
-#define LOG_WARNING(...)        Logout(LOG_LEVEL_WARNING, __VA_ARGS__);
-#define LOG_INFO(...)           Logout(LOG_LEVEL_INFO, __VA_ARGS__);
-#define LOG_DEBUG(...)          Logout(LOG_LEVEL_DEBUG, __VA_ARGS__);
+#define LOGV(fmt, ...) __android_log_print(ANDROID_LOG_VERBOSE, "zcrash", fmt, ##__VA_ARGS__)
+#define LOGD(fmt, ...) __android_log_print(ANDROID_LOG_DEBUG , "zcrash", fmt, ##__VA_ARGS__)
+#define LOGI(fmt, ...) __android_log_print(ANDROID_LOG_INFO  , "zcrash", fmt, ##__VA_ARGS__)
+#define LOGW(fmt, ...) __android_log_print(ANDROID_LOG_WARN  , "zcrash", fmt, ##__VA_ARGS__)
+#define LOGE(fmt, ...) __android_log_print(ANDROID_LOG_ERROR  , "zcrash", fmt, ##__VA_ARGS__)
 
 class mylog {
 };
 
-
-template<class ...Args>
-void Logout(int _log_level, Args... args)
-{
-    auto print = [](auto i){std::cout<< i << " ";};
-    std::initializer_list<int>{(print(args),0)...};
-    std::cout<< std::endl;
-}
 #endif //JNIPROJECT_MYLOG_H

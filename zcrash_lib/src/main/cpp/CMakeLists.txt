@@ -7,19 +7,23 @@ cmake_minimum_required(VERSION 3.22.1)
 
 # Declares and names the project.
 
-project("zcrash_lib")
+project("zcrash")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-file(GLOB SRC_FILES
+#######################################
+# libzcrash.so
+#######################################
+
+file(GLOB_RECURSE SRC_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/*.h
         ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 
 add_library( # Sets the name of the library.
-        zcrash_lib
+        zcrash
 
         # Sets the library as a shared library.
         SHARED
@@ -45,8 +49,38 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        zcrash_lib
+        zcrash
 
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
+
+if(USEASAN)
+
+    target_compile_options(zcrash PUBLIC
+            #启用了 ASAN 内存错误检测工具
+            -fsanitize=address
+            #禁止编译器省略帧指针，以帮助生成更准确的堆栈跟踪信息
+            -fno-omit-frame-pointer)
+
+    set_target_properties(zcrash PROPERTIES
+            LINK_FLAGS " \
+        -fsanitize=address")
+
+else()
+
+    target_compile_options(zcrash PUBLIC
+            -Oz
+            -flto
+            -ffunction-sections
+            -fdata-sections)
+
+    set_target_properties(zcrash PROPERTIES
+            LINK_FLAGS " \
+        -O3 \
+        -flto \
+        -Wl,--exclude-libs,ALL \
+        -Wl,--gc-sections"
+        )
+
+endif()
