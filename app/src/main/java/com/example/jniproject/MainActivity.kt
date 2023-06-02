@@ -22,15 +22,22 @@ class MainActivity : AppCompatActivity() {
         val nativeLib = NativeLib()
         binding.sampleText.text = nativeLib.stringFromJNI()
         nativeLib.visitField()
+        val persons = nativeLib.createPersons()
         val names: Array<String> = arrayOf("子鼠", "丑牛", "寅虎", "卯兔", "辰龙")
-        nativeLib.getPersons(names)
+        val personNames = nativeLib.getPersons(names)
 
         Log.d(
             TAG,
             "onCreate: name: " + nativeLib.name
                     + "\nstaticName: " + NativeLib.staticName
                     + "\ncreatePerson: " + nativeLib.createPerson().toString()
-                    + "\ncreatePersons: " + nativeLib.createPersons().toString()
         )
+        for (person in persons) {
+            Log.d(TAG, "createPersons: $person")
+        }
+
+        for (person in personNames) {
+            Log.d(TAG, "getPersons: $person")
+        }
     }
 }

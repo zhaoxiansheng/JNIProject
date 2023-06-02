@@ -58,31 +58,23 @@ Java_com_android_car_zcrash_1lib_demo_NativeLib_getPersons(JNIEnv *env, jobject 
     jclass j_cls = env->FindClass("com/android/car/zcrash_lib/demo/Person");
     jmethodID j_methodId = env->GetMethodID(j_cls, "<init>", "(Ljava/lang/String;)V");
 
-    LOGD("\n native gets person j_methodId:");
-
     if (names == nullptr) {
         return nullptr;
     }
 
     jsize j_length = env->GetArrayLength(names);
 
-    LOGD("\n native gets person j_length");
-
     jobjectArray j_array = env->NewObjectArray(j_length, j_cls, nullptr);
 
-    LOGD("\n native gets person j_array");
-
     for (int i = 0; i < j_length; ++i) {
-        LOGD("\n native gets person for");
+        jobject name = (env->GetObjectArrayElement(names, i));
 
-        jstring name = static_cast<jstring>(env->GetObjectArrayElement(names, i));
-
-        LOGD("\n native gets person name: %s", name);
         if (name == nullptr) {
             return nullptr;
         }
         jobject obj = env->NewObject(j_cls, j_methodId, name);
         env->SetObjectArrayElement(j_array, i, obj);
+        env->DeleteLocalRef(obj);
     }
     return j_array;
 }
