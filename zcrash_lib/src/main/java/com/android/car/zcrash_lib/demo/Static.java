@@ -1,8 +1,8 @@
 package com.android.car.zcrash_lib.demo;
 
-public class NativeLib {
+public class Static {
 
-    public NativeLib() {
+    public Shared() {
         System.loadLibrary("zcrash");
     }
 
