@@ -5,12 +5,17 @@
 #include <string>
 #include "../mylog.h"
 
-#define XC_JNI_VERSION    JNI_VERSION_1_6
+#define ZC_JNI_VERSION    JNI_VERSION_1_6
+
+//忽略了-Wgnu-statement-expression警告
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wgnu-statement-expression"
+
 
 static jint zc_jni_init(JNIEnv *env,
-                        jobject thiz,
+                        jclass thiz,
                         jint api_level,
-                        jstring os_version) {
+                        jstring os_version, jstring abi_list) {
     return 0;
 }
 
@@ -46,5 +51,5 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
 
     env->DeleteLocalRef(j_cls);
 
-    return JNI_VERSION_1_6;
+    return ZC_JNI_VERSION;
 }

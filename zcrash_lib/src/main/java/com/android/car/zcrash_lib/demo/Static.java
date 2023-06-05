@@ -2,7 +2,7 @@ package com.android.car.zcrash_lib.demo;
 
 public class Static {
 
-    public Shared() {
+    public Static() {
         System.loadLibrary("zcrash");
     }
 
