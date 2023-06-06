@@ -5,7 +5,7 @@
 #ifndef JNIPROJECT_ZC_JNI_H
 #define JNIPROJECT_ZC_JNI_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <sys/types.h>
 #include <jni.h>
 

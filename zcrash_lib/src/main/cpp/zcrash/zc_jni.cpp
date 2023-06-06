@@ -4,7 +4,7 @@
 
 #include "zc_jni.h"
 
-#include <stdint.h>
+#include <cstdint>
 #include <sys/types.h>
 #include <jni.h>
 
@@ -29,10 +29,11 @@ static JNINativeMethod zc_jni_methods[] = {
         },
 };
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
-{
+JNIEXPORT jint
+
+JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
     JNIEnv *env = nullptr;
-    (void)reserved;
+    (void) reserved;
 
     if (vm->GetEnv(reinterpret_cast<void **>(&env), JNI_VERSION_1_6) != JNI_OK) {
         return JNI_ERR;
@@ -41,7 +42,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved)
     jclass j_cls = env->FindClass("com/android/car/zcrash/NativeHandler");
 
     // 注册方法
-    jint r = env->RegisterNatives( j_cls, zc_jni_methods, sizeof(zc_jni_methods) / sizeof(zc_jni_methods[0]));
+    jint r = env->RegisterNatives(j_cls, zc_jni_methods,
+                                  sizeof(zc_jni_methods) / sizeof(zc_jni_methods[0]));
     if (r != JNI_OK) {
         return JNI_ERR;
     }
