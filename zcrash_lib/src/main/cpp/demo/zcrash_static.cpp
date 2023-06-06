@@ -3,7 +3,7 @@
 #include "../mylog.h"
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_android_car_zcrash_1lib_demo_Static_stringFromJNI(
+Java_com_android_car_zcrash_demo_Static_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -11,7 +11,7 @@ Java_com_android_car_zcrash_1lib_demo_Static_stringFromJNI(
 }
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_android_car_zcrash_1lib_demo_Static_visitField(JNIEnv *env, jobject thiz) {
+Java_com_android_car_zcrash_demo_Static_visitField(JNIEnv *env, jobject thiz) {
     jclass j_cls = env->GetObjectClass(thiz);
     jfieldID j_fieldId = env->GetFieldID(j_cls, "name", "Ljava/lang/String;");
     jstring j_str = static_cast<jstring>(env->GetObjectField(thiz, j_fieldId));
@@ -33,15 +33,15 @@ Java_com_android_car_zcrash_1lib_demo_Static_visitField(JNIEnv *env, jobject thi
 }
 
 extern "C" JNIEXPORT jobject JNICALL
-Java_com_android_car_zcrash_1lib_demo_Static_createPerson(JNIEnv *env, jobject thiz) {
-    jclass j_cls = env->FindClass("com/android/car/zcrash_lib/demo/Person");
+Java_com_android_car_zcrash_demo_Static_createPerson(JNIEnv *env, jobject thiz) {
+    jclass j_cls = env->FindClass("com/android/car/zcrash/demo/Person");
     jmethodID j_methodId = env->GetMethodID(j_cls, "<init>", "(Ljava/lang/String;I)V");
     return env->NewObject(j_cls, j_methodId, env->NewStringUTF("孙悟空"), 20);
 }
 
 extern "C" JNIEXPORT jobjectArray JNICALL
-Java_com_android_car_zcrash_1lib_demo_Static_createPersons(JNIEnv *env, jobject thiz) {
-    jclass j_cls = env->FindClass("com/android/car/zcrash_lib/demo/Person");
+Java_com_android_car_zcrash_demo_Static_createPersons(JNIEnv *env, jobject thiz) {
+    jclass j_cls = env->FindClass("com/android/car/zcrash/demo/Person");
     jmethodID j_methodId = env->GetMethodID(j_cls, "<init>", "(Ljava/lang/String;)V");
     jobjectArray j_array = env->NewObjectArray(5, j_cls, nullptr);
 
@@ -53,9 +53,9 @@ Java_com_android_car_zcrash_1lib_demo_Static_createPersons(JNIEnv *env, jobject 
 }
 
 extern "C" JNIEXPORT jobjectArray JNICALL
-Java_com_android_car_zcrash_1lib_demo_Static_getPersons(JNIEnv *env, jobject thiz,
+Java_com_android_car_zcrash_demo_Static_getPersons(JNIEnv *env, jobject thiz,
                                                         jobjectArray names) {
-    jclass j_cls = env->FindClass("com/android/car/zcrash_lib/demo/Person");
+    jclass j_cls = env->FindClass("com/android/car/zcrash/demo/Person");
     jmethodID j_methodId = env->GetMethodID(j_cls, "<init>", "(Ljava/lang/String;)V");
 
     if (names == nullptr) {
