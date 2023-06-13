@@ -1,4 +1,4 @@
-package com.android.car.zcrash_lib
+package com.android.car.zcrash
 
 import org.junit.Test
 

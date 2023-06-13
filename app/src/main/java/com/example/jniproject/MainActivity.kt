@@ -4,8 +4,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.android.car.zcrash_lib.demo.Shared
-import com.android.car.zcrash_lib.demo.Static
+import com.android.car.zcrash.NativeHandler
+import com.android.car.zcrash.demo.Static
 import com.example.jniproject.Utils.Companion.getAbiList
 import com.example.jniproject.databinding.ActivityMainBinding
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(
             TAG,
-            "Shared: init: " + Shared.nativeInit(
+            "Shared: init: " + NativeHandler.nativeInit(
                 Build.VERSION.SDK_INT,
                 Build.VERSION.RELEASE,
                 getAbiList()

@@ -1,4 +1,4 @@
-package com.android.car.zcrash_lib.demo;
+package com.android.car.zcrash.demo;
 
 public class Static {
 
