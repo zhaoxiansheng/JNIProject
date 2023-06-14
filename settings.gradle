@@ -16,3 +16,4 @@ rootProject.name = "JNIProject"
 include ':app'
 include ':anr'
 include ':zcrash_lib'
+include ':nativeActivity'

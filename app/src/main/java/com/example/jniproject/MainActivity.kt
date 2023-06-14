@@ -1,8 +1,12 @@
 package com.example.jniproject
 
+import android.app.NativeActivity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
 import com.android.car.zcrash.NativeHandler
 import com.android.car.zcrash.demo.Static
@@ -50,5 +54,13 @@ class MainActivity : AppCompatActivity() {
                 getAbiList()
             )
         )
+
+        binding.sampleText.setOnClickListener(object : OnClickListener{
+            override fun onClick(p0: View?) {
+                val intent = Intent(this@MainActivity, NativeActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
     }
 }

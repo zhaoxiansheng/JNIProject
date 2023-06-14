@@ -38,6 +38,12 @@ int zc_common_init(int         api_level,
                    const char *app_lib_dir,
                    const char *log_dir);
 
+int zc_common_open_crash_log(char *pathname, size_t pathname_len, int *from_placeholder);
+int zc_common_open_trace_log(char *pathname, size_t pathname_len, uint64_t trace_time);
+void zc_common_close_crash_log(int fd);
+void zc_common_close_trace_log(int fd);
+int zc_common_seek_to_content_end(int fd);
+
 #ifdef __cplusplus
 }
 #endif
