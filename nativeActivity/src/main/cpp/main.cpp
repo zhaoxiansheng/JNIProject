@@ -125,8 +125,8 @@ static int engine_init_display(struct engine *engine) {
 
     /* 2. EGL 在使用前需要初始化，因此每个显示器句柄(EGLDisplay)在使用前都需要初始化。*/
     eglInitialize(display, /* 有效的显示器句柄 */
-                  0,       /* 返回主版本号 - 不关心可设为 NULL 值或零(0) */
-                  0);     /* 返回次版本号 - 不关心可设为 NULL 值或零(0) */
+                  nullptr,       /* 返回主版本号 - 不关心可设为 NULL 值或零(0) */
+                  nullptr);     /* 返回次版本号 - 不关心可设为 NULL 值或零(0) */
     /* 原型：EGLBoolean eglInitialize( EGLDisplay dpy,
      *                                EGLint*    major,
      *                                EGLint*    minor );
@@ -188,7 +188,7 @@ static int engine_init_display(struct engine *engine) {
     surface = eglCreateWindowSurface(display, /* 有效的显示器句柄 */
                                      config,  /* 有效的 Surface 的 EGL 配置 */
                                      engine->app->window, /* ANativeWindow */
-                                     NULL); /* 属性列表可以是空，使用默认值 */
+                                     nullptr); /* 属性列表可以是空，使用默认值 */
     /* 原型：EGLSurface eglCreateWindowSurface( EGLDisplay          display,
      *                                         EGLConfig           config,
      *                                         EGLNatvieWindowType window,
@@ -198,8 +198,8 @@ static int engine_init_display(struct engine *engine) {
     /* 创建一个 OpenGL ES 图形上下文 */
     context = eglCreateContext(display, /* 有效的显示器句柄 */
                                config,  /* 有效的 Surface 的 EGL 配置 */
-                               NULL,    /* 不和其他 EGLContext 分享资源 */
-                               NULL);  /* 属性列表可以是空，使用默认值 */
+                               nullptr,    /* 不和其他 EGLContext 分享资源 */
+                               nullptr);  /* 属性列表可以是空，使用默认值 */
     /* 原型：EGLContext eglCreateContext( EGLDisplay    display,
      *                                   EGLConfig     config,
      *                                   EGLContext    shareContext,
@@ -271,7 +271,7 @@ static int engine_init_display(struct engine *engine) {
 static void engine_draw_frame(struct engine *engine) {
     LOGI("engine_draw_frame");
     /* 显示器句柄为空 */
-    if (engine->display == NULL) {
+    if (engine->display == nullptr) {
         /* No display.
          * 不显示。
          */
@@ -281,9 +281,9 @@ static void engine_draw_frame(struct engine *engine) {
     /* Just fill the screen with a color.
      * 只是用一种颜色添充屏幕。
      */
-    glClearColor(((float) engine->state.x) / engine->width,
+    glClearColor(((float) engine->state.x) / static_cast<float>(engine->width),
                  engine->state.angle,
-                 ((float) engine->state.y) / engine->height,
+                 ((float) engine->state.y) / static_cast<float>(engine->height),
                  1);
     /* 原型：void glClearColor( GLclampf red,
      * 　　　                   GLclampf green,
@@ -398,7 +398,7 @@ static void engine_handle_cmd(struct android_app *app, int32_t cmd) {
             /* The window is being shown, get it ready.
              * 窗口是正在显示，准备得到它。
              */
-            if (engine->app->window != NULL) {
+            if (engine->app->window != nullptr) {
                 engine_init_display(engine);
                 engine_draw_frame(engine);
             }
@@ -418,7 +418,7 @@ static void engine_handle_cmd(struct android_app *app, int32_t cmd) {
             /* When our app gains focus, we start monitoring the accelerometer.
              * 当我们的应用程序得到焦点时，我们开始监测加速器。
              */
-            if (engine->accelerometerSensor != NULL) {
+            if (engine->accelerometerSensor != nullptr) {
                 /* 启用指定的传感器 */
                 ASensorEventQueue_enableSensor(engine->sensorEventQueue,
                                                engine->accelerometerSensor);
@@ -441,7 +441,7 @@ static void engine_handle_cmd(struct android_app *app, int32_t cmd) {
              * This is to avoid consuming battery while not being used.
              * 在不使用时期避免消耗电池。
              */
-            if (engine->accelerometerSensor != NULL) {
+            if (engine->accelerometerSensor != nullptr) {
                 /* 禁用指定的传感器 */
                 ASensorEventQueue_disableSensor(engine->sensorEventQueue,
                                                 engine->accelerometerSensor);
@@ -470,7 +470,7 @@ static void engine_handle_cmd(struct android_app *app, int32_t cmd) {
  */
 void android_main(struct android_app *state) {
     LOGI("android_main,start Activity...");
-    struct engine engine;
+    struct engine engine{};
 
     /* Make sure glue isn't stripped.
      * 确认glue模块未剥离。
@@ -504,10 +504,10 @@ void android_main(struct android_app *state) {
     engine.sensorEventQueue = ASensorManager_createEventQueue(engine.sensorManager,
                                                               state->looper,
                                                               LOOPER_ID_USER,
-                                                              NULL,
-                                                              NULL);
+                                                              nullptr,
+                                                              nullptr);
 
-    if (state->savedState != NULL) {
+    if (state->savedState != nullptr) {
         /* We are starting with a previous saved state;
          * 我们使用一个之前保存状态启动。
          *
@@ -520,7 +520,7 @@ void android_main(struct android_app *state) {
     /* loop waiting for stuff to do.
      * 循环等待事件
      */
-    while (1) {
+    while (true) {
         /* Read all pending events.
          * 读取全部待解决事件。
          */
@@ -539,7 +539,7 @@ void android_main(struct android_app *state) {
          */
         /* (0) - 立即返回，(-1) - 无限等待 */
         while ((ident = ALooper_pollAll(engine.animating ? 0 : -1,
-                                        NULL, /* 不返回发生事件的文件描述符 */
+                                        nullptr, /* 不返回发生事件的文件描述符 */
                 /* 在 android_native_app_glue.c 文件的 android_app_entry 函数体中
                  * 调用 ALooper_addFd 函数时设置为 ALOOPER_EVENT_INPUT - 文件描述符读操作有效 */
                                         &events,
@@ -547,7 +547,7 @@ void android_main(struct android_app *state) {
             /* Process this event.
              * 处理这个事件。
              */
-            if (source != NULL) {
+            if (source != nullptr) {
                 /* 处理应用程序主线程的命令
                  * 在 android_native_app_glue.c 文件的 android_app_entry 函数体中
                  * 设置指向 process_cmd 或 process_input 函数。
@@ -559,7 +559,7 @@ void android_main(struct android_app *state) {
              * 如果一个传感器有数据，马上处理它。
              */
             if (ident == LOOPER_ID_USER) {
-                if (engine.accelerometerSensor != NULL) {
+                if (engine.accelerometerSensor != nullptr) {
                     ASensorEvent event;
 
                     while (ASensorEventQueue_getEvents(engine.sensorEventQueue, &event, 1) > 0) {
