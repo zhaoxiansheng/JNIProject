@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <jni.h>
+#include <ctime>
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,6 +39,9 @@ extern "C" {
 
 #define ZC_JNI_VERSION    JNI_VERSION_1_6
 #define ZC_JNI_CLASS_NAME "zcrash/NativeHandler"
+
+extern sig_atomic_t  zc_common_native_crashed;
+extern sig_atomic_t  zc_common_java_crashed;
 
 #ifdef __cplusplus
 }
