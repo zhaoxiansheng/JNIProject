@@ -136,7 +136,7 @@ public class NativeHandler {
         return instance;
     }
 
-    public static native int nativeInit( int apiLevel,
+    private static native int nativeInit( int apiLevel,
                                          String osVersion,
                                          String abiList,
                                          String manufacturer,

@@ -7,12 +7,17 @@
 #include <stdint.h>
 #include <sys/types.h>
 #include <jni.h>
+#include "zc_test.h"
 
 //忽略了-Wgnu-statement-expression警告
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-statement-expression"
 
 static int zc_jni_inited = 0;
+
+//process statue
+sig_atomic_t  zc_common_native_crashed    = 0;
+sig_atomic_t  zc_common_java_crashed      = 0;
 
 static jint zc_jni_init(JNIEnv       *env,
                         jclass thiz,
@@ -60,7 +65,7 @@ static void zc_jni_test_crash(JNIEnv *env, jclass thiz, jint run_in_new_thread) 
     (void) env;
     (void) thiz;
 
-//    zc_test_crash(run_in_new_thread);
+    zc_test_crash(run_in_new_thread);
 }
 
 static JNINativeMethod zc_jni_methods[] = {

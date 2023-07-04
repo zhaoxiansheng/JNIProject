@@ -9,7 +9,6 @@
 extern "C" {
 #endif
 
-#include <cstdint>
 #include <sys/types.h>
 #include <jni.h>
 

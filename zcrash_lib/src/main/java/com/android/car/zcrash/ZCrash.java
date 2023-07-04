@@ -18,6 +18,19 @@ public class ZCrash {
         return logger;
     }
 
+    static String getAppId() {
+        return appId;
+    }
+
+    static String getAppVersion() {
+        return appVersion;
+    }
+
+    public static String getLogDir() {
+        return logDir;
+    }
+
+
     private ZCrash() {
     }
 
@@ -826,5 +839,9 @@ public class ZCrash {
             this.anrFastCallback = fastCallback;
             return this;
         }
+    }
+
+    public static void testNativeCrash(boolean runInNewThread) {
+        NativeHandler.getInstance().testNativeCrash(runInNewThread);
     }
 }

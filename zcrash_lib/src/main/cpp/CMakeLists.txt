@@ -20,7 +20,8 @@ project("zcrash")
 
 file(GLOB_RECURSE SRC_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/*.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/*.c)
 
 add_library( # Sets the name of the library.
         zcrash

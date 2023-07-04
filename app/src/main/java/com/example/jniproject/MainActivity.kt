@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
 import com.android.car.zcrash.NativeHandler
+import com.android.car.zcrash.ZCrash
 import com.android.car.zcrash.demo.Static
 import com.example.jniproject.Utils.Companion.getAbiList
 import com.example.jniproject.databinding.ActivityMainBinding
@@ -48,12 +49,10 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(
             TAG,
-            "Shared: init: " + NativeHandler.nativeInit(
-                Build.VERSION.SDK_INT,
-                Build.VERSION.RELEASE,
-                getAbiList()
-            )
+            "Shared: init: " + ZCrash.init(this)
         )
+
+        ZCrash.testNativeCrash(false)
 
         binding.sampleText.setOnClickListener(object : OnClickListener{
             override fun onClick(p0: View?) {
