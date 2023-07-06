@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             "Shared: init: " + ZCrash.init(this)
         )
 
-        ZCrash.testNativeCrash(false)
+        ZCrash.testNativeCrash(true)
 
         binding.sampleText.setOnClickListener(object : OnClickListener{
             override fun onClick(p0: View?) {

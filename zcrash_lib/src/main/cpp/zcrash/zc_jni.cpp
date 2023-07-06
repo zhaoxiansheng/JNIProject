@@ -15,6 +15,20 @@
 
 static int zc_jni_inited = 0;
 
+//回调java层
+#define XC_CRASH_CALLBACK_METHOD_NAME      "crashCallback"
+#define XC_CRASH_CALLBACK_METHOD_SIGNATURE "(Ljava/lang/String;Ljava/lang/String;ZZLjava/lang/String;)V"
+
+//初始化优先申请内存的大小，防止发生crash的时候无法申请内存
+#define XC_CRASH_EMERGENCY_BUF_LEN         (30 * 1024)
+
+//the log file
+//优先预留FD 防止发生Crash的时候无法申请FD
+static int              xc_crash_prepared_fd = -1;
+
+//the crash
+static pid_t            xc_crash_tid = 0;
+
 //process statue
 sig_atomic_t  zc_common_native_crashed    = 0;
 sig_atomic_t  zc_common_java_crashed      = 0;

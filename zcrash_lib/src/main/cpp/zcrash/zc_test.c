@@ -84,17 +84,44 @@ void xc_test_call_1(void)
     r = 0;
 }
 
+static void *xc_test_new_thread(void *arg)
+{
+    (void)arg;
+    pthread_detach(pthread_self());
+    pthread_setname_np(pthread_self(), "xcrash_test_cal");
+
+    xc_test_call_1();
+
+    return NULL;
+}
+
+static void *xc_test_keep_logging(void *arg)
+{
+    (void)arg;
+    pthread_detach(pthread_self());
+    pthread_setname_np(pthread_self(), "xcrash_test_log");
+
+    int i = 0;
+    while(++i < 600)
+    {
+        XC_TEST_LOG("crashed APP's thread is running ...... %d", i);
+        usleep(1000 * 100);
+    }
+
+    return NULL;
+}
+
 
 void zc_test_crash(int run_in_new_thread)
 {
     pthread_t tid;
     
-//    pthread_create(&tid, NULL, &xc_test_keep_logging, NULL);
-//    usleep(1000 * 10);
+    pthread_create(&tid, NULL, &xc_test_keep_logging, NULL);
+    usleep(1000 * 10);
 
-//    if(run_in_new_thread)
-//        pthread_create(&tid, NULL, &xc_test_new_thread, NULL);
-//    else
+    if(run_in_new_thread)
+        pthread_create(&tid, NULL, &xc_test_new_thread, NULL);
+    else
         xc_test_call_1();
 }
 
