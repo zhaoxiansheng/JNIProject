@@ -9,8 +9,8 @@
 extern "C" {
 #endif
 
-#include <sys/types.h>
-#include <jni.h>
+#include "../../../../../../../AndroidStudio/AndroidSdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/sys/types.h"
+#include "../../../../../../../AndroidStudio/AndroidSdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/jni.h"
 
 // log filename format:
 // tombstone_01234567890123456789_appversion__processname.native.xcrash

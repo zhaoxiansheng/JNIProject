@@ -29,7 +29,7 @@
 #include <sys/types.h>
 #include <android/log.h>
 #include "zc_test.h"
-#include "../common/zc_common_init.h"
+#include "zc_common.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
